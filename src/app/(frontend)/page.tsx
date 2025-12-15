@@ -1,4 +1,3 @@
-import PostHero from '@/components/site/posts/PostHero';
 import PostCard from '@/components/site/posts/PostCard';
 import { getLatestPosts } from '@/lib/payload';
 import { lexicalToHtml, lexicalToPlainText } from '@/lib/lexical-to-html';
@@ -154,7 +153,7 @@ export default async function Home() {
   }> = [];
   
   try {
-    const payloadPosts = await getLatestPosts(7);
+    const payloadPosts = await getLatestPosts(6);
     
     posts = payloadPosts.map(p => {
       // Convert Lexical content to HTML for excerpt
@@ -193,7 +192,7 @@ export default async function Home() {
           width: heroWidth,
           height: heroHeight
         },
-        categories: p.category ? [{ name: p.category.title, slug: p.category.slug }] : [],
+        categories: p.category ? [{ name: p.category.name, slug: p.category.slug }] : [],
         date: p.publishedDate,
         modified: p.updatedAt
       };
@@ -202,7 +201,6 @@ export default async function Home() {
     console.error('Failed to load posts:', error);
   }
 
-  const [first, ...rest] = posts;
   
   return (
     <>
@@ -224,14 +222,9 @@ export default async function Home() {
       )}
       
       {/* Posts section */}
-      <main className="w-full">
-        <section className="space-y-6">
-          {first && <PostHero {...first} />}
-          <div className="grid gap-6 md:grid-cols-2">
-            {rest.map(p => (<PostCard key={p.slug} {...p} />))}
-          </div>
-        </section>
-      </main>
+      <div className="grid gap-6 md:grid-cols-2">
+        {posts.map(p => (<PostCard key={p.slug} {...p} />))}
+      </div>
     </>
   );
 }

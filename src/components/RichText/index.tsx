@@ -8,8 +8,10 @@ import {
 import {
   JSXConvertersFunction,
   LinkJSXConverter,
+  UploadJSXConverter,
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
+import React from 'react'
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
@@ -36,10 +38,41 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   return `/${slug}`
 }
 
-const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
-  ...defaultConverters,
-  ...LinkJSXConverter({ internalDocToHref }),
-  blocks: {
+const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => {
+  return {
+    ...defaultConverters,
+    ...LinkJSXConverter({ internalDocToHref }),
+    upload: ({ node, parent }) => {
+      // Get the default upload JSX from the built-in converter
+      const uploadJSX = UploadJSXConverter.upload({ node, parent, nodesToJSX: () => [], converters: defaultConverters, childIndex: 0 })
+      
+      // Check both node and parent for format/alignment
+      const formatSource = ('format' in node && node.format) ? node : (parent && 'format' in parent && parent.format) ? parent : null
+      
+      if (formatSource && 'format' in formatSource && formatSource.format) {
+        const alignStyle: React.CSSProperties = {}
+        switch (formatSource.format) {
+          case 'center':
+            alignStyle.textAlign = 'center'
+            break
+          case 'right':
+          case 'end':
+            alignStyle.textAlign = 'right'
+            break
+          case 'left':
+          case 'start':
+            alignStyle.textAlign = 'left'
+            break
+        }
+        
+        if (alignStyle.textAlign) {
+          return <div style={alignStyle}>{uploadJSX}</div>
+        }
+      }
+      
+      return uploadJSX
+    },
+    blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (
       <MediaBlock
@@ -54,7 +87,8 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
   },
-})
+}
+}
 
 type Props = {
   data: DefaultTypedEditorState

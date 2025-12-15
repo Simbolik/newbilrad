@@ -11,12 +11,13 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import RichText from '@/components/RichText'
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
+import RelatedPosts from '@/components/site/posts/RelatedPosts'
 import type { Post } from '@/payload-types'
 import { formatSwedishDateWithAuthor } from '@/lib/swedish-date'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Home } from 'lucide-react'
+import { Home, Clock } from 'lucide-react'
+import { calculateReadingTime, formatReadingTime } from '@/utilities/calculateReadingTime'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -93,6 +94,40 @@ export default async function Page({ params: paramsPromise }: Args) {
   const post = await queryPostBySlug({ slug: decodedSlug })
   
   if (post) {
+    // Calculate reading time
+    const readingTime = calculateReadingTime(post.content);
+    
+    // Get related posts - either manually selected or from same category
+    let relatedPosts = post.relatedPosts?.filter((p): p is Post => typeof p === 'object') || [];
+    
+    // If no manual related posts and post has categories, fetch related posts from same category
+    if (relatedPosts.length === 0 && post.categories && post.categories.length > 0) {
+      const firstCategory = post.categories[0];
+      if (typeof firstCategory === 'object') {
+        const categoryRelatedPosts = await payload.find({
+          collection: 'posts',
+          where: {
+            and: [
+              {
+                categories: {
+                  contains: firstCategory.id,
+                },
+              },
+              {
+                id: {
+                  not_equals: post.id,
+                },
+              },
+            ],
+          },
+          limit: 4,
+          depth: 1,
+          sort: '-publishedAt',
+        });
+        relatedPosts = categoryRelatedPosts.docs;
+      }
+    }
+    
     // Render post
     return (
       <article className="pb-16">
@@ -139,7 +174,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           
           {/* Date and Author */}
           {post.publishedAt && (
-            <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
+            <div className="flex items-center gap-2 mb-2 text-sm text-gray-500">
               <span>
                 {formatSwedishDateWithAuthor(post.publishedAt)} av{' '}
                 <Link 
@@ -152,6 +187,12 @@ export default async function Page({ params: paramsPromise }: Args) {
             </div>
           )}
           
+          {/* Reading Time */}
+          <div className="flex items-center gap-1.5 mb-4 text-sm text-gray-600">
+            <Clock className="w-4 h-4 flex-shrink-0" />
+            <span className="translate-y-[1px]">Lästid: {formatReadingTime(readingTime)}</span>
+          </div>
+          
           {/* Title */}
           <h1 className="text-4xl font-bold text-gray-800 mb-6">
             {post.title}
@@ -159,15 +200,15 @@ export default async function Page({ params: paramsPromise }: Args) {
           
           {/* Content */}
           <RichText className="max-w-none text-base [&>*:last-child]:mb-0" data={post.content} enableGutter={false} />
-          
-          {/* Related Posts */}
-          {post.relatedPosts && post.relatedPosts.length > 0 && (
-            <RelatedPosts
-              className="mt-12"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
-            />
-          )}
         </div>
+        
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <RelatedPosts
+            posts={relatedPosts}
+            className="mt-6"
+          />
+        )}
       </article>
     )
   }
@@ -356,6 +397,7 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     limit: 1,
     overrideAccess: draft,
     pagination: false,
+    depth: 2, // Populate related posts
     where: {
       slug: {
         equals: slug,

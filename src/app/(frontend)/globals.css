@@ -233,3 +233,42 @@ figcaption {
 .rt-wrap::-webkit-scrollbar {
   height: 8px;
 }
+
+/* RichText (Payload) image alignment support */
+.payload-richtext picture {
+  display: block;
+  width: fit-content;
+}
+
+.payload-richtext img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Center-aligned images */
+.payload-richtext div[style*="text-align:center"] picture,
+.payload-richtext div[style*="text-align: center"] picture,
+.payload-richtext picture[style*="text-align:center"],
+.payload-richtext picture[style*="text-align: center"] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Right-aligned images */
+.payload-richtext div[style*="text-align:right"] picture,
+.payload-richtext div[style*="text-align: right"] picture,
+.payload-richtext picture[style*="text-align:right"],
+.payload-richtext picture[style*="text-align: right"] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* Left-aligned images */
+.payload-richtext div[style*="text-align:left"] picture,
+.payload-richtext div[style*="text-align: left"] picture,
+.payload-richtext picture[style*="text-align:left"],
+.payload-richtext picture[style*="text-align: left"] {
+  margin-left: 0;
+  margin-right: auto;
+}

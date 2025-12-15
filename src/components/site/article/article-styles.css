@@ -303,11 +303,49 @@
 
 /* 13. Images */
 .article-content img {
-  @apply rounded-lg shadow-md my-8 w-full h-auto;
+  @apply rounded-lg shadow-md my-8 h-auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .article-content figure {
   @apply my-8;
+}
+
+/* Support for image alignment from Lexical editor */
+.article-content picture {
+  display: block;
+  width: fit-content;
+}
+
+.article-content img {
+  display: block;
+}
+
+/* Center-aligned */
+.article-content div[style*="text-align:center"] picture,
+.article-content div[style*="text-align: center"] picture,
+.article-content picture[style*="text-align:center"],
+.article-content picture[style*="text-align: center"] {
+  @apply mx-auto;
+}
+
+/* Right-aligned */
+.article-content div[style*="text-align:right"] picture,
+.article-content div[style*="text-align: right"] picture,
+.article-content picture[style*="text-align:right"],
+.article-content picture[style*="text-align: right"] {
+  @apply ml-auto;
+  margin-right: 0;
+}
+
+/* Left-aligned */
+.article-content div[style*="text-align:left"] picture,
+.article-content div[style*="text-align: left"] picture,
+.article-content picture[style*="text-align:left"],
+.article-content picture[style*="text-align: left"] {
+  margin-left: 0;
+  @apply mr-auto;
 }
 
 /* 14. Image Caption */
