@@ -92,17 +92,20 @@
 }
 
 .featured-image-caption {
-  @apply mt-3 px-4 py-2 text-sm text-gray-700 text-center italic bg-gray-100 rounded-lg relative;
+  @apply mt-3 px-4 py-2 text-sm text-gray-700 text-center italic rounded-lg relative;
+  background: rgb(249, 250, 251); /* gray-50 - almost white */
   line-height: 1.6;
 }
 
-/* Speech-bubble tail for featured image caption */
+/* Speech-bubble pointer for featured image caption - left side */
 .featured-image-caption::before {
   content: '';
-  @apply absolute -top-2 left-4 w-0 h-0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid #f3f4f6; /* bg-gray-100 */
+  @apply absolute -top-2 left-4;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgb(249, 250, 251); /* gray-50 */
 }
 
 /* Article Content - Enhanced Typography */
@@ -322,11 +325,19 @@
   display: block;
 }
 
+/* Figure with caption support */
+.article-content figure {
+  @apply my-8;
+  width: fit-content;
+}
+
 /* Center-aligned */
 .article-content div[style*="text-align:center"] picture,
 .article-content div[style*="text-align: center"] picture,
 .article-content picture[style*="text-align:center"],
-.article-content picture[style*="text-align: center"] {
+.article-content picture[style*="text-align: center"],
+.article-content div[style*="text-align:center"] figure,
+.article-content div[style*="text-align: center"] figure {
   @apply mx-auto;
 }
 
@@ -334,7 +345,9 @@
 .article-content div[style*="text-align:right"] picture,
 .article-content div[style*="text-align: right"] picture,
 .article-content picture[style*="text-align:right"],
-.article-content picture[style*="text-align: right"] {
+.article-content picture[style*="text-align: right"],
+.article-content div[style*="text-align:right"] figure,
+.article-content div[style*="text-align: right"] figure {
   @apply ml-auto;
   margin-right: 0;
 }
@@ -343,7 +356,9 @@
 .article-content div[style*="text-align:left"] picture,
 .article-content div[style*="text-align: left"] picture,
 .article-content picture[style*="text-align:left"],
-.article-content picture[style*="text-align: left"] {
+.article-content picture[style*="text-align: left"],
+.article-content div[style*="text-align:left"] figure,
+.article-content div[style*="text-align: left"] figure {
   margin-left: 0;
   @apply mr-auto;
 }
@@ -351,18 +366,21 @@
 /* 14. Image Caption */
 .article-content figcaption,
 .article-content .wp-caption-text {
-  @apply mt-3 px-4 py-2 text-sm text-gray-700 text-center italic bg-gray-100 rounded-lg relative;
+  @apply mt-3 px-4 py-2 text-sm text-gray-700 text-center italic rounded-lg relative;
+  background: rgb(249, 250, 251); /* gray-50 - almost white */
   line-height: 1.6;
 }
 
-/* Speech-bubble tail for captions */
+/* Speech-bubble pointer on left side pointing to image */
 .article-content figcaption::before,
 .article-content .wp-caption-text::before {
   content: '';
-  @apply absolute -top-2 left-4 w-0 h-0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid #f3f4f6; /* bg-gray-100 */
+  @apply absolute -top-2 left-4;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgb(249, 250, 251); /* gray-50 */
 }
 
 /* WordPress Caption Figure */
@@ -375,7 +393,8 @@
 }
 
 .article-content .wp-caption-figure figcaption {
-  @apply mt-3 px-4 py-2 text-sm text-gray-700 text-center italic bg-gray-100 rounded-lg relative;
+  @apply mt-3 px-4 py-2 text-sm text-gray-700 text-center italic rounded-lg relative;
+  background: rgb(249, 250, 251); /* gray-50 - almost white */
   line-height: 1.6;
 }
 

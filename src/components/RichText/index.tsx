@@ -46,9 +46,26 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
       // Get the default upload JSX from the built-in converter
       const uploadJSX = UploadJSXConverter.upload({ node, parent, nodesToJSX: () => [], converters: defaultConverters, childIndex: 0 })
       
+      // Extract caption from upload node
+      const caption = node.fields?.caption
+      
       // Check both node and parent for format/alignment
       const formatSource = ('format' in node && node.format) ? node : (parent && 'format' in parent && parent.format) ? parent : null
       
+      // Build the content with optional caption
+      let content = uploadJSX
+      
+      // Wrap image with figure if there's a caption
+      if (caption && typeof caption === 'string' && caption.trim()) {
+        content = (
+          <figure>
+            {uploadJSX}
+            <figcaption>{caption}</figcaption>
+          </figure>
+        )
+      }
+      
+      // Apply alignment if present
       if (formatSource && 'format' in formatSource && formatSource.format) {
         const alignStyle: React.CSSProperties = {}
         switch (formatSource.format) {
@@ -66,11 +83,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         }
         
         if (alignStyle.textAlign) {
-          return <div style={alignStyle}>{uploadJSX}</div>
+          return <div style={alignStyle}>{content}</div>
         }
       }
       
-      return uploadJSX
+      return content
     },
     blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
