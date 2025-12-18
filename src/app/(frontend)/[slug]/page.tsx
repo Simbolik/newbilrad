@@ -406,6 +406,9 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     return {
       title: category.meta?.title || `${category.title} - AlltomSEO.se`,
       description: category.meta?.description || `Utforska artiklar om ${category.title} på AlltomSEO.se`,
+      alternates: {
+        canonical: `https://alltomseo.se/${category.slug}`,
+      },
       openGraph: category.meta?.image && typeof category.meta.image === 'object' ? {
         images: [{
           url: category.meta.image.url || '',

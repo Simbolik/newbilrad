@@ -25,12 +25,18 @@ export const generateMeta = async (args: {
   const { doc } = args
 
   const ogImage = getImageURL(doc?.meta?.image)
+  const serverUrl = getServerSideURL()
+  const slug = Array.isArray(doc?.slug) ? doc?.slug.join('/') : doc?.slug || ''
+  const canonicalUrl = slug ? `${serverUrl}/${slug}` : serverUrl
 
   const title = doc?.meta?.title
     ? doc?.meta?.title + ' | Payload Website Template'
     : 'Payload Website Template'
 
   return {
+    alternates: {
+      canonical: canonicalUrl,
+    },
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
