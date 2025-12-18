@@ -20,6 +20,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Home, Clock } from 'lucide-react'
 import { calculateReadingTime, formatReadingTime } from '@/utilities/calculateReadingTime'
+import { getServerSideURL } from '@/utilities/getURL'
 
 // Function to create smart excerpt from content
 function createSmartExcerpt(content: string, wordLimit: number = 65): string {
@@ -403,11 +404,12 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   // Check if it's a category
   const category = await queryCategoryBySlug({ slug: decodedSlug })
   if (category) {
+    const serverUrl = getServerSideURL()
     return {
       title: category.meta?.title || `${category.title} - AlltomSEO.se`,
       description: category.meta?.description || `Utforska artiklar om ${category.title} på AlltomSEO.se`,
       alternates: {
-        canonical: `https://alltomseo.se/${category.slug}`,
+        canonical: `${serverUrl}/${category.slug}`,
       },
       openGraph: category.meta?.image && typeof category.meta.image === 'object' ? {
         images: [{

@@ -6,6 +6,7 @@ import { getOrganizationMainJson } from '@/lib/jsonld/organization-main';
 import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 import RichText from '@/components/RichText';
+import { getServerSideURL } from '@/utilities/getURL';
 
 // Function to create smart excerpt from content
 function createSmartExcerpt(content: string, wordLimit: number = 65): string {
@@ -51,6 +52,7 @@ function createSmartExcerpt(content: string, wordLimit: number = 65): string {
 export async function generateMetadata(): Promise<Metadata> {
   const pageTitle = 'AlltomSEO.se – SEO Content Platform';
   const metaDescription = 'Professional SEO-optimized content platform powered by Next.js and Payload CMS.';
+  const serverUrl = getServerSideURL();
   
   return {
     // 1) Base Meta Tags (Next.js will order these first)
@@ -75,10 +77,10 @@ export async function generateMetadata(): Promise<Metadata> {
     
     // 3) Canonical & Language Alternates
     alternates: {
-      canonical: 'https://alltomseo.se',
+      canonical: serverUrl,
       languages: {
-        'sv': 'https://alltomseo.se',
-        'sv-SE': 'https://alltomseo.se',
+        'sv': serverUrl,
+        'sv-SE': serverUrl,
       },
     },
     
@@ -86,13 +88,13 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: pageTitle,
       description: metaDescription,
-      url: 'https://alltomseo.se',
+      url: serverUrl,
       siteName: 'AlltomSEO.se',
       locale: 'sv_SE',
       type: 'website',
       images: [
         {
-          url: 'https://alltomseo.se/og-image.jpg',
+          url: `${serverUrl}/og-image.jpg`,
           width: 1200,
           height: 630,
           alt: 'AlltomSEO.se - SEO Content Platform',
@@ -105,7 +107,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: pageTitle,
       description: metaDescription,
-      images: ['https://alltomseo.se/og-image.jpg'],
+      images: [`${serverUrl}/og-image.jpg`],
     },
     
     // 6) Other Meta Tags
