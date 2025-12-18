@@ -12,12 +12,55 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import RichText from '@/components/RichText'
 import RelatedPosts from '@/components/site/posts/RelatedPosts'
+import PostCard from '@/components/site/posts/PostCard'
 import type { Post } from '@/payload-types'
 import { formatSwedishDateWithAuthor } from '@/lib/swedish-date'
+import { lexicalToHtml, lexicalToPlainText } from '@/lib/lexical-to-html'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Home, Clock } from 'lucide-react'
 import { calculateReadingTime, formatReadingTime } from '@/utilities/calculateReadingTime'
+
+// Function to create smart excerpt from content
+function createSmartExcerpt(content: string, wordLimit: number = 65): string {
+  if (!content) return '';
+  
+  // First, replace paragraph tags with a space to preserve separation
+  const textWithSpaces = content
+    .replace(/<\/p>\s*<p>/gi, ' ') // Replace paragraph breaks with space
+    .replace(/<\/p>/gi, ' ') // Replace closing p tags with space
+    .replace(/<p>/gi, '') // Remove opening p tags
+    .replace(/<[^>]*>/g, '') // Remove remaining HTML tags
+    .replace(/\s+/g, ' ') // Normalize multiple spaces
+    .trim();
+  
+  // Split into words
+  const words = textWithSpaces.split(/\s+/);
+  
+  // If content is shorter than limit, return as is
+  if (words.length <= wordLimit) {
+    return `<p>${textWithSpaces}</p>`;
+  }
+  
+  // Build text up to word limit and find last complete sentence
+  let currentText = '';
+  let lastCompleteSentence = '';
+  
+  for (let i = 0; i < Math.min(words.length, wordLimit); i++) {
+    if (currentText) currentText += ' ';
+    currentText += words[i];
+    
+    // Check if this ends a sentence
+    if (/[.!?]$/.test(words[i])) {
+      lastCompleteSentence = currentText;
+    }
+  }
+  
+  // Use last complete sentence if we have one, otherwise use all words up to limit
+  const targetText = lastCompleteSentence || currentText;
+  
+  return `<p>${targetText}</p>`;
+}
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -167,6 +210,7 @@ export default async function Page({ params: paramsPromise }: Args) {
                   fill
                   className="object-cover"
                   priority
+                  fetchPriority="high"
                 />
               </div>
             </div>
@@ -255,57 +299,36 @@ export default async function Page({ params: paramsPromise }: Args) {
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2">
-            {categoryPosts.docs.map((post) => (
-              <article key={post.id} className="rounded-xs border border-gray-100 bg-[#f0f1f3] p-3 shadow-3d flex flex-col h-full">
-                {post.heroImage && typeof post.heroImage === 'object' && (
-                  <Link href={`/${post.slug}`} className="block overflow-hidden rounded-xs">
-                    <div className="relative w-full" style={{ aspectRatio: '400/300' }}>
-                      <Image
-                        src={post.heroImage.url || ''}
-                        alt={post.heroImage.alt || post.title}
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  </Link>
-                )}
-                {post.publishedAt && (
-                  <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
-                    <span>
-                      {formatSwedishDateWithAuthor(post.publishedAt)} av{' '}
-                      <Link 
-                        href="/om-oss" 
-                        className="hover:text-gray-400 transition-colors"
-                      >
-                        Redaktionen på AlltomSEO
-                      </Link>
-                    </span>
-                  </div>
-                )}
-                <h2 className="mt-4 text-lg font-semibold leading-snug">
-                  <Link href={`/${post.slug}`} className="text-gray-700 hover:text-gray-400 transition-colors">
-                    {post.title}
-                  </Link>
-                </h2>
-                {post.meta?.description && (
-                  <div className="flex flex-col flex-grow">
-                    <p className="prose prose-base mt-1 max-w-none flex-grow text-gray-600">
-                      {post.meta.description}
-                    </p>
-                    <div className="mt-2.5">
-                      <Link 
-                        href={`/${post.slug}`}
-                        className="inline-block px-5 py-2.5 bg-slate-600 text-white text-base font-medium rounded-xs hover:bg-slate-700 transition-colors duration-200"
-                      >
-                        Läs hela artikeln →
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </article>
-            ))}
+            {categoryPosts.docs.map((post, index) => {
+              // Convert Lexical content to HTML for excerpt
+              const htmlContent = post.content ? lexicalToHtml(post.content) : '';
+              const plainTextContent = post.content ? lexicalToPlainText(post.content) : '';
+              
+              // Use provided excerpt or generate from content
+              const sourceText = htmlContent || plainTextContent;
+              
+              // Create smart excerpt with 80 word limit
+              const smartExcerpt = createSmartExcerpt(sourceText, 80);
+              
+              return (
+                <PostCard 
+                  key={post.id}
+                  title={post.title}
+                  slug={post.slug}
+                  excerpt={smartExcerpt}
+                  featured={{
+                    url: post.heroImage && typeof post.heroImage === 'object' ? post.heroImage.url : null,
+                    alt: post.heroImage && typeof post.heroImage === 'object' ? post.heroImage.alt : null,
+                  }}
+                  categories={post.categories?.map(cat => 
+                    typeof cat === 'object' ? { name: cat.title, slug: cat.slug } : { name: '', slug: '' }
+                  ).filter(cat => cat.name)}
+                  date={post.publishedAt || ''}
+                  modified={post.updatedAt}
+                  priority={index < 2}
+                />
+              );
+            })}
           </div>
         )}
       </div>
@@ -337,6 +360,22 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       <div className="bg-[#f0f1f3] rounded-lg border border-gray-100 shadow-3d p-6">
+        {/* Hero Image */}
+        {page.heroImage && typeof page.heroImage === 'object' && (
+          <div className="overflow-hidden rounded-xs mb-6">
+            <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+              <Image
+                src={page.heroImage.url || ''}
+                alt={page.heroImage.alt || page.title}
+                fill
+                className="object-cover"
+                priority
+                fetchPriority="high"
+              />
+            </div>
+          </div>
+        )}
+        
         {/* Page Content */}
         {page.content && (
           <RichText 

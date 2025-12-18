@@ -9,8 +9,9 @@ type Card = {
   categories?: { name: string; slug: string }[];
   date?: string;
   modified?: string;
+  priority?: boolean;
 };
-export default function PostCard({ title, slug, excerpt, featured, categories, date, modified }: Card){
+export default function PostCard({ title, slug, excerpt, featured, categories, date, modified, priority = false }: Card){
   return (
     <article className="rounded-xs border border-border bg-surface p-3 shadow-3d flex flex-col h-full">
       {featured?.url && (
@@ -26,7 +27,8 @@ export default function PostCard({ title, slug, excerpt, featured, categories, d
                 width={400} 
                 height={300} 
                 className="w-full h-full object-cover"
-                loading="lazy"
+                loading={priority ? "eager" : "lazy"}
+                {...(priority && { fetchPriority: "high" as const })}
               />
             </picture>
           </div>

@@ -159,6 +159,10 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
+  /**
+   * Optional hero image displayed at the top of the page
+   */
+  heroImage?: (string | null) | Media;
   content: {
     root: {
       type: string;
@@ -924,6 +928,7 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  heroImage?: T;
   content?: T;
   meta?:
     | T

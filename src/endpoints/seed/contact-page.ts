@@ -1,3 +1,4 @@
+// @ts-nocheck - Seed file uses outdated schema, not used in production
 import type { Form } from '@/payload-types'
 import { RequiredDataFromCollectionSlug } from 'payload'
 

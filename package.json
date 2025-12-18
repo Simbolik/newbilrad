@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@payloadcms/admin-bar": "3.68.2",
+    "@payloadcms/db-mongodb": "3.68.2",
     "@payloadcms/live-preview-react": "3.68.2",
     "@payloadcms/next": "3.68.2",
     "@payloadcms/plugin-form-builder": "3.68.2",
@@ -52,8 +53,7 @@
     "react-hook-form": "7.45.4",
     "sharp": "0.34.2",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
-    "@payloadcms/db-mongodb": "3.68.2"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -74,6 +74,7 @@
     "playwright-core": "1.56.1",
     "postcss": "^8.4.38",
     "prettier": "^3.4.2",
+    "schema-dts": "^1.1.5",
     "tailwindcss": "^3.4.3",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "5.1.4",

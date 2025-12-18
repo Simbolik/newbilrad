@@ -211,7 +211,7 @@ export default async function Home() {
       />
       
       {/* Homepage Hero */}
-      {homepageHero && (
+      {homepageHero?.content && (
         <div className="bg-[#f0f1f3] rounded-lg border border-gray-100 shadow-3d p-6 mb-6">
           <RichText 
             data={homepageHero.content} 
@@ -223,7 +223,13 @@ export default async function Home() {
       
       {/* Posts section */}
       <div className="grid gap-6 md:grid-cols-2">
-        {posts.map(p => (<PostCard key={p.slug} {...p} />))}
+        {posts.map((p, index) => (
+          <PostCard 
+            key={p.slug} 
+            {...p} 
+            priority={index < 2} 
+          />
+        ))}
       </div>
     </>
   );

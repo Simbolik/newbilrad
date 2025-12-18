@@ -68,6 +68,7 @@ export default function ResponsiveImage({
           height={506}
           className={className}
           loading={priority ? 'eager' : loading}
+          {...(priority && { fetchPriority: 'high' as const })}
           decoding="async"
         />
       </picture>
@@ -89,6 +90,7 @@ export default function ResponsiveImage({
         height={height}
         className={className}
         loading={priority ? 'eager' : loading}
+        {...(priority && { fetchPriority: 'high' as const })}
         decoding="async"
       />
     </picture>

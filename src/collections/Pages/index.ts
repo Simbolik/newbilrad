@@ -61,6 +61,15 @@ export const Pages: CollectionConfig<'pages'> = {
         {
           fields: [
             {
+              name: 'heroImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Hero Image',
+              admin: {
+                description: 'Optional hero image displayed at the top of the page',
+              },
+            },
+            {
               name: 'content',
               type: 'richText',
               label: 'Page Content',

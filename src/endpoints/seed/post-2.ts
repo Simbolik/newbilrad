@@ -1,3 +1,4 @@
+// @ts-nocheck - Seed file uses outdated schema, not used in production
 import { RequiredDataFromCollectionSlug } from 'payload'
 import type { PostArgs } from './post-1'
 

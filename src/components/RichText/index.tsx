@@ -17,9 +17,24 @@ import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
-  CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
+
+type CTABlockProps = {
+  richText?: DefaultTypedEditorState | null
+  links?: {
+    link: {
+      type?: 'reference' | 'custom' | null
+      newTab?: boolean | null
+      reference?: { relationTo: 'pages' | 'posts'; value: number | string } | null
+      url?: string | null
+      label: string
+      appearance?: 'default' | 'outline' | null
+    }
+  }[] | null
+  blockName?: string | null
+  blockType: 'cta'
+}
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/ui'
@@ -42,69 +57,81 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   return {
     ...defaultConverters,
     ...LinkJSXConverter({ internalDocToHref }),
-    upload: ({ node, parent }) => {
-      // Get the default upload JSX from the built-in converter
-      const uploadJSX = UploadJSXConverter.upload({ node, parent, nodesToJSX: () => [], converters: defaultConverters, childIndex: 0 })
+    upload: ({ node }) => {
+      // Get the media value - could be in node.value or node.fields.value
+      const value = (node as any).value || node.fields?.value
+      if (!value || typeof value !== 'object') return null
       
-      // Extract caption from upload node
-      const caption = node.fields?.caption
+      // Get caption - check inline caption from node.fields first, then from media document
+      const inlineCaption = node.fields?.caption
+      const mediaCaption = value.caption
       
-      // Check both node and parent for format/alignment
-      const formatSource = ('format' in node && node.format) ? node : (parent && 'format' in parent && parent.format) ? parent : null
+      const img = (
+        <img
+          src={value.url || ''}
+          alt={value.alt || ''}
+          width={value.width || 800}
+          height={value.height || 600}
+          className="w-full h-auto"
+          loading="lazy"
+        />
+      )
       
-      // Build the content with optional caption
-      let content = uploadJSX
-      
-      // Wrap image with figure if there's a caption
-      if (caption && typeof caption === 'string' && caption.trim()) {
-        content = (
+      // Check for inline caption (string type from Lexical upload field)
+      if (inlineCaption && typeof inlineCaption === 'string' && inlineCaption.trim()) {
+        return (
           <figure>
-            {uploadJSX}
-            <figcaption>{caption}</figcaption>
+            {img}
+            <figcaption>{inlineCaption.trim()}</figcaption>
           </figure>
         )
       }
       
-      // Apply alignment if present
-      if (formatSource && 'format' in formatSource && formatSource.format) {
-        const alignStyle: React.CSSProperties = {}
-        switch (formatSource.format) {
-          case 'center':
-            alignStyle.textAlign = 'center'
-            break
-          case 'right':
-          case 'end':
-            alignStyle.textAlign = 'right'
-            break
-          case 'left':
-          case 'start':
-            alignStyle.textAlign = 'left'
-            break
-        }
+      // Check for richText caption from media document
+      if (mediaCaption && typeof mediaCaption === 'object' && (mediaCaption as any).root) {
+        const root = (mediaCaption as any).root
+        const children = root.children || []
         
-        if (alignStyle.textAlign) {
-          return <div style={alignStyle}>{content}</div>
+        // Extract plain text from caption
+        let captionText = ''
+        children.forEach((child: any) => {
+          if (child.type === 'paragraph' && child.children) {
+            child.children.forEach((c: any) => {
+              if (c.text) captionText += c.text
+            })
+          } else if (child.type === 'text' && child.text) {
+            captionText += child.text
+          }
+        })
+        
+        if (captionText.trim()) {
+          return (
+            <figure>
+              {img}
+              <figcaption>{captionText.trim()}</figcaption>
+            </figure>
+          )
         }
       }
       
-      return content
+      return img
     },
     blocks: {
-    banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
-    mediaBlock: ({ node }) => (
-      <MediaBlock
-        className="col-start-1 col-span-3"
-        imgClassName="m-0"
-        {...node.fields}
-        captionClassName="mx-auto max-w-[48rem]"
-        enableGutter={false}
-        disableInnerContainer={true}
-      />
-    ),
-    code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
-    cta: ({ node }) => <CallToActionBlock {...node.fields} />,
-  },
-}
+      banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
+      mediaBlock: ({ node }) => (
+        <MediaBlock
+          className="col-start-1 col-span-3"
+          imgClassName="m-0"
+          {...node.fields}
+          captionClassName="mx-auto max-w-[48rem]"
+          enableGutter={false}
+          disableInnerContainer={true}
+        />
+      ),
+      code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
+      cta: ({ node }) => <CallToActionBlock {...node.fields} />,
+    },
+  }
 }
 
 type Props = {

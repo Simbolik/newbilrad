@@ -23,6 +23,7 @@ export default function HeroImage({
       height={height}
       className={className}
       loading="eager"
+      fetchPriority="high"
       decoding="async"
     />
   );

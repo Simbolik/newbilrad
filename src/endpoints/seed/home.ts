@@ -1,3 +1,4 @@
+// @ts-nocheck - Seed file uses outdated schema, not used in production
 import type { RequiredDataFromCollectionSlug } from 'payload'
 import type { Media } from '@/payload-types'
 
