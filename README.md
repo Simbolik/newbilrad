@@ -280,8 +280,38 @@ mongodump --db=alltomseo --out=/path/to/backup/
 mongorestore --db=alltomseo /path/to/backup/alltomseo/
 ```
 
+## 🔌 External Post Creation API
+
+The platform includes an API for creating posts programmatically from external services.
+
+### Quick Start
+
+```bash
+curl -X POST https://alltomseo.se/api/posts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "title": "Article Title",
+    "slug": "article-slug",
+    "metaDescription": "SEO description",
+    "image": "https://example.com/image.jpg",
+    "imageAlt": "Image description",
+    "body": "Intro text.\n\n## Section Heading\n\nContent here."
+  }'
+```
+
+### Features
+- Bearer token authentication via `API_KEY` environment variable
+- Markdown-style headings (`##`, `###`, `####`) converted to proper HTML
+- Auto-download images from URL and convert to WebP
+- SEO meta description support
+- Posts are published immediately
+
+📖 **[Full API Documentation](./docs/API.md)**
+
 ## 📚 Documentation
 
+- **[docs/API.md](./docs/API.md)** - External Post Creation API
 - **[PAYLOAD-DOCS.md](./PAYLOAD-DOCS.md)** - Complete Payload CMS documentation
 - **[Payload CMS Docs](https://payloadcms.com/docs)** - Official documentation
 - **[Next.js Docs](https://nextjs.org/docs)** - Next.js App Router guide
