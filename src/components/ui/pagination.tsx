@@ -35,8 +35,10 @@ const PaginationLink = ({ className, isActive, size = 'icon', ...props }: Pagina
     className={cn(
       buttonVariants({
         size,
-        variant: isActive ? 'outline' : 'ghost',
+        variant: 'ghost',
       }),
+      'inline-flex items-center justify-center',
+      isActive && 'border border-gray-300 bg-white rounded-md shadow-sm pointer-events-none',
       className,
     )}
     {...props}
@@ -49,24 +51,24 @@ const PaginationPrevious = ({
 }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to previous page"
-    className={cn('gap-1 pl-2.5', className)}
+    className={cn('gap-1 pl-2.5 inline-flex items-center', className)}
     size="default"
     {...props}
   >
-    <ChevronLeft className="h-4 w-4" />
-    <span>Previous</span>
+    <ChevronLeft className="h-4 w-4 flex-shrink-0" />
+    <span className="leading-none">Previous</span>
   </PaginationLink>
 )
 
 const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to next page"
-    className={cn('gap-1 pr-2.5', className)}
+    className={cn('gap-1 pr-2.5 inline-flex items-center', className)}
     size="default"
     {...props}
   >
-    <span>Next</span>
-    <ChevronRight className="h-4 w-4" />
+    <span className="leading-none">Next</span>
+    <ChevronRight className="h-4 w-4 flex-shrink-0" />
   </PaginationLink>
 )
 

@@ -37,6 +37,8 @@ AlltomSEO.se is a Swedish content platform dedicated to helping users master sea
 - ✅ Root-level post URLs (e.g., `/post-slug` instead of `/posts/post-slug`)
 - ✅ Page Heroes collection for manageable hero content
 - ✅ Full Lexical editor features (tables, formatting, media, etc.)
+- ✅ Homepage pagination with modern Tailwind styling
+- ✅ SEO-optimized paginated pages with proper meta tags
 
 ## 📁 Project Structure
 
@@ -45,7 +47,8 @@ AlltomSEO.se is a Swedish content platform dedicated to helping users master sea
 ├── src/
 │   ├── app/
 │   │   ├── (frontend)/          # Public website
-│   │   │   ├── page.tsx          # Homepage
+│   │   │   ├── page.tsx          # Homepage (page 1)
+│   │   │   ├── page/[pageNumber]/ # Paginated homepage (/page/2, /page/3, etc.)
 │   │   │   ├── [slug]/           # Dynamic routes
 │   │   │   └── layout.tsx        # Site layout
 │   │   └── (payload)/            # Admin panel
@@ -57,6 +60,8 @@ AlltomSEO.se is a Swedish content platform dedicated to helping users master sea
 │   │   ├── Media/                # Image uploads
 │   │   └── Users/                # Admin users
 │   ├── components/
+│   │   ├── Pagination/           # Pagination component with basePath support
+│   │   ├── ui/                   # UI components (pagination, button, etc.)
 │   │   └── site/                 # Frontend components
 │   │       ├── posts/            # Post components
 │   │       ├── home/             # Homepage components
@@ -312,6 +317,7 @@ curl -X POST https://alltomseo.se/api/posts \
 ## 📚 Documentation
 
 - **[docs/API.md](./docs/API.md)** - External Post Creation API
+- **[docs/PAGINATION.md](./docs/PAGINATION.md)** - Homepage Pagination System
 - **[PAYLOAD-DOCS.md](./PAYLOAD-DOCS.md)** - Complete Payload CMS documentation
 - **[Payload CMS Docs](https://payloadcms.com/docs)** - Official documentation
 - **[Next.js Docs](https://nextjs.org/docs)** - Next.js App Router guide
@@ -353,6 +359,6 @@ Private project - All rights reserved.
 
 ---
 
-**Last Updated**: December 11, 2025  
-**Version**: 1.0.0  
+**Last Updated**: December 27, 2025  
+**Version**: 1.1.0  
 **Status**: ✅ Production Ready

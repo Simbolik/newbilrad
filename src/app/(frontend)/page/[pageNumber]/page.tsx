@@ -1,12 +1,21 @@
 import PostCard from '@/components/site/posts/PostCard';
 import { lexicalToHtml, lexicalToPlainText } from '@/lib/lexical-to-html';
 import type { Metadata } from 'next';
-import { getOrganizationMainJson } from '@/lib/jsonld/organization-main';
 import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 import RichText from '@/components/RichText';
-import { getServerSideURL } from '@/utilities/getURL';
 import { Pagination } from '@/components/Pagination';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { getServerSideURL } from '@/utilities/getURL';
+
+export const revalidate = 600;
+
+type Args = {
+  params: Promise<{
+    pageNumber: string
+  }>
+}
 
 // Function to create smart excerpt from content
 function createSmartExcerpt(content: string, wordLimit: number = 65): string {
@@ -49,78 +58,12 @@ function createSmartExcerpt(content: string, wordLimit: number = 65): string {
   return `<p>${targetText}</p>`;
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const pageTitle = 'AlltomSEO.se – SEO Content Platform';
-  const metaDescription = 'Professional SEO-optimized content platform powered by Next.js and Payload CMS.';
-  const serverUrl = getServerSideURL();
-  
-  return {
-    // 1) Base Meta Tags (Next.js will order these first)
-    title: pageTitle,
-    description: metaDescription,
-    
-    // 2) Robots & Crawling Instructions
-    robots: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-        'max-video-preview': -1,
-      },
-    },
-    
-    // 3) Canonical & Language Alternates
-    alternates: {
-      canonical: serverUrl,
-      languages: {
-        'sv': serverUrl,
-        'sv-SE': serverUrl,
-      },
-    },
-    
-    // 4) Open Graph (Social Media)
-    openGraph: {
-      title: pageTitle,
-      description: metaDescription,
-      url: serverUrl,
-      siteName: 'AlltomSEO.se',
-      locale: 'sv_SE',
-      type: 'website',
-      images: [
-        {
-          url: `${serverUrl}/og-image.jpg`,
-          width: 1200,
-          height: 630,
-          alt: 'AlltomSEO.se - SEO Content Platform',
-        },
-      ],
-    },
-    
-    // 5) Twitter Cards
-    twitter: {
-      card: 'summary_large_image',
-      title: pageTitle,
-      description: metaDescription,
-      images: [`${serverUrl}/og-image.jpg`],
-    },
-    
-    // 6) Other Meta Tags
-    other: {
-      'format-detection': 'telephone=no',
-    },
-  };
-}
+export default async function HomePage({ params: paramsPromise }: Args) {
+  const { pageNumber } = await paramsPromise;
+  const sanitizedPageNumber = Number(pageNumber);
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+  if (!Number.isInteger(sanitizedPageNumber) || sanitizedPageNumber < 1) notFound();
 
-export default async function Home() {
   // Fetch homepage hero
   const payload = await getPayload({ config: configPromise });
   const heroResult = await payload.find({
@@ -141,10 +84,13 @@ export default async function Home() {
     collection: 'posts',
     depth: 1,
     limit: postsPerPage,
-    page: 1,
+    page: sanitizedPageNumber,
     sort: '-publishedDate',
     overrideAccess: false,
   });
+  
+  // Check if page number is out of bounds
+  if (sanitizedPageNumber > postsResult.totalPages) notFound();
   
   let posts: Array<{
     title: string;
@@ -218,18 +164,11 @@ export default async function Home() {
   } catch (error) {
     console.error('Failed to load posts:', error);
   }
-
   
   return (
     <>
-      {/* Organization JSON-LD - Main page only */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(getOrganizationMainJson()) }}
-      />
-      
-      {/* Homepage Hero */}
-      {homepageHero?.content && (
+      {/* Homepage Hero - only on first page */}
+      {sanitizedPageNumber === 1 && homepageHero?.content && (
         <div className="bg-[#f0f1f3] rounded-lg border border-gray-100 shadow-3d p-6 mb-6">
           <RichText 
             data={homepageHero.content} 
@@ -239,13 +178,33 @@ export default async function Home() {
         </div>
       )}
       
+      {/* Page Header for paginated pages */}
+      {sanitizedPageNumber > 1 && (
+        <div className="bg-[#f0f1f3] rounded-lg border border-gray-100 shadow-3d p-6 mb-6">
+          {/* Breadcrumbs */}
+          <nav className="breadcrumbs flex items-center gap-2 text-sm mb-4" aria-label="Breadcrumb">
+            <Link href="/" className="breadcrumb-item flex items-center text-gray-600 hover:text-gray-900 transition-colors">
+              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+              </svg>
+              <span>Hem</span>
+            </Link>
+            <span className="breadcrumb-separator text-gray-400">›</span>
+            <span className="breadcrumb-current text-gray-900 font-medium">Sida {sanitizedPageNumber}</span>
+          </nav>
+          
+          {/* H1 Heading */}
+          <h1 className="text-3xl font-bold text-gray-800">Senaste artiklarna – Sida {sanitizedPageNumber}</h1>
+        </div>
+      )}
+      
       {/* Posts section */}
       <div className="grid gap-6 md:grid-cols-2">
         {posts.map((p, index) => (
           <PostCard 
             key={p.slug} 
             {...p} 
-            priority={index < 2} 
+            priority={sanitizedPageNumber === 1 && index < 2} 
           />
         ))}
       </div>
@@ -262,4 +221,98 @@ export default async function Home() {
       )}
     </>
   );
+}
+
+export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { pageNumber } = await paramsPromise;
+  const serverUrl = getServerSideURL();
+  // Extract domain name from server URL
+  const domainName = serverUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  
+  const pageTitle = pageNumber === '1' 
+    ? `Senaste artiklarna - ${domainName}`
+    : `Senaste artiklarna - Sida ${pageNumber} - ${domainName}`;
+  const metaDescription = pageNumber === '1'
+    ? `Här hittar du de senaste artiklarna om SEO på ${domainName}. Läs våra guider och tips.`
+    : `Här hittar du äldre artiklar om SEO på ${domainName} (Sida ${pageNumber}). Fortsätt läsa vårt arkiv för fler guider och tips.`;
+  
+  return {
+    // 1) Base Meta Tags
+    title: pageTitle,
+    description: metaDescription,
+    
+    // 2) Robots & Crawling Instructions
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
+    
+    // 3) Canonical & Language Alternates
+    alternates: {
+      canonical: `${serverUrl}/page/${pageNumber}`,
+      languages: {
+        'sv': `${serverUrl}/page/${pageNumber}`,
+        'sv-SE': `${serverUrl}/page/${pageNumber}`,
+      },
+    },
+    
+    // 4) Open Graph (Social Media)
+    openGraph: {
+      title: pageTitle,
+      description: metaDescription,
+      url: `${serverUrl}/page/${pageNumber}`,
+      siteName: 'AlltomSEO.se',
+      locale: 'sv_SE',
+      type: 'website',
+      images: [
+        {
+          url: `${serverUrl}/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: 'AlltomSEO.se - SEO Content Platform',
+        },
+      ],
+    },
+    
+    // 5) Twitter Cards
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description: metaDescription,
+      images: [`${serverUrl}/og-image.jpg`],
+    },
+    
+    // 6) Other Meta Tags
+    other: {
+      'format-detection': 'telephone=no',
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise });
+  const { totalDocs } = await payload.count({
+    collection: 'posts',
+    overrideAccess: false,
+  });
+
+  const totalPages = Math.ceil(totalDocs / 6);
+
+  const pages: { pageNumber: string }[] = [];
+
+  for (let i = 2; i <= totalPages; i++) {
+    pages.push({ pageNumber: String(i) });
+  }
+
+  return pages;
 }
