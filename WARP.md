@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-AlltomSEO.se is a Swedish SEO content platform built with Next.js 15 App Router and Payload CMS 3. It's a full-stack application that combines a headless CMS backend with a production-ready frontend website optimized for Swedish SEO content.
+Bilråd.se is a Swedish car content platform built with Next.js 15 App Router and Payload CMS 3. It's a full-stack application that combines a headless CMS backend with a production-ready frontend website focused on Swedish automotive content.
 
 **Tech Stack:**
 - **Backend:** Payload CMS 3.68.2 with MongoDB 8.0.16
@@ -61,7 +61,7 @@ pnpm reinstall           # Clean reinstall dependencies
 ### Directory Structure
 
 **Core Application:**
-- `src/app/(frontend)/` - Public-facing Next.js routes (Swedish SEO website)
+- `src/app/(frontend)/` - Public-facing Next.js routes (Swedish car content website)
 - `src/app/(payload)/` - Payload CMS admin panel routes (`/admin`)
 - `src/collections/` - Payload CMS collections (Posts, Pages, Categories, Media, Users, PageHeroes)
 - `src/blocks/` - Reusable Lexical editor blocks (Banner, Code, MediaBlock, Form, etc.)
@@ -229,7 +229,7 @@ When content changes, Next.js pages must be revalidated:
 Access database via `mongosh`:
 ```bash
 mongosh
-use alltomseo  # or your database name
+use bilrad  # or your database name
 show collections
 db.posts.find()
 exit
@@ -237,8 +237,8 @@ exit
 
 Backup/restore:
 ```bash
-mongodump --db=alltomseo --out=/backup/path/
-mongorestore --db=alltomseo /backup/path/alltomseo/
+mongodump --db=bilrad --out=/backup/path/
+mongorestore --db=bilrad /backup/path/bilrad/
 ```
 
 ### Pagination System

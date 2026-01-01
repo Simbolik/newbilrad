@@ -37,7 +37,7 @@ export default async function Footer() {
           {/* Copyright */}
           <div className="text-center">
             <div className="text-sm text-gray-500">
-              © {currentYear} AlltomSEO.se – Alla rättigheter förbehålles
+              © {currentYear} Bilråd.se – Alla rättigheter förbehålles
             </div>
           </div>
         </div>

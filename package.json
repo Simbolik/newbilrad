@@ -1,7 +1,7 @@
 {
-  "name": "alltomseo",
+  "name": "bilrad",
   "version": "1.0.0",
-  "description": "Website template for Payload",
+  "description": "Bilråd.se - Swedish car content platform",
   "license": "MIT",
   "type": "module",
   "scripts": {

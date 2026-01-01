@@ -50,8 +50,8 @@ function createSmartExcerpt(content: string, wordLimit: number = 65): string {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const pageTitle = 'AlltomSEO.se – SEO Content Platform';
-  const metaDescription = 'Professional SEO-optimized content platform powered by Next.js and Payload CMS.';
+  const pageTitle = 'Bilråd.se – Swedish Car Content Platform';
+  const metaDescription = 'Professional car content platform for Swedish car enthusiasts, powered by Next.js and Payload CMS.';
   const serverUrl = getServerSideURL();
   
   return {
@@ -89,7 +89,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: pageTitle,
       description: metaDescription,
       url: serverUrl,
-      siteName: 'AlltomSEO.se',
+      siteName: 'Bilråd.se',
       locale: 'sv_SE',
       type: 'website',
       images: [
@@ -97,7 +97,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: `${serverUrl}/og-image.jpg`,
           width: 1200,
           height: 630,
-          alt: 'AlltomSEO.se - SEO Content Platform',
+          alt: 'Bilråd.se - Swedish Car Content Platform',
         },
       ],
     },

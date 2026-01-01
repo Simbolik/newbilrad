@@ -45,7 +45,7 @@ export default function RelatedPosts({ posts, className = '' }: RelatedPostsProp
                       href="/om-oss" 
                       className="hover:text-gray-400 transition-colors"
                     >
-                      Redaktionen på AlltomSEO
+                      Redaktionen på Bilråd.se
                     </Link>
                   </span>
                 </div>

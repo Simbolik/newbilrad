@@ -8,13 +8,13 @@ export async function generateMetadata(): Promise<Metadata> {
   
   return {
     // Base metadata - will be overridden by page-specific metadata
-    metadataBase: new URL('https://alltomseo.se'),
+    metadataBase: new URL('https://bilråd.se'),
     
     // Global site settings
     openGraph: {
       locale: 'sv_SE',
       type: 'website',
-      siteName: 'AlltomSEO.se',
+      siteName: 'Bilråd.se',
     },
     twitter: {
       card: 'summary_large_image',

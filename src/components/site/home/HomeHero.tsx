@@ -3,22 +3,22 @@ export default function HomeHero() {
   return (
     <div className="bg-[#f0f1f3] rounded-lg border border-gray-100 shadow-3d p-6 mb-6">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">
-        Bemästra Sökmotoroptimering (SEO)
+        Bemästra Bilkunskap
       </h1>
       
       <div className="text-base space-y-4">
         <p>
-          För dig som vill <strong>lära dig SEO</strong> och verkligen förstå hur{' '}
-          <strong>sökmotoroptimering</strong> fungerar, är detta rätt plats. Vi täcker allt från
-          grunderna i en sökordsanalys till avancerad optimering av din hemsida. Vårt uppdrag är
-          att ge dig beprövade strategier och praktisk kunskap så att du kan{' '}
-          <strong>synas på Google</strong>.
+          För dig som vill <strong>lära dig om bilar</strong> och verkligen förstå hur{' '}
+          <strong>fordon</strong> fungerar, är detta rätt plats. Vi täcker allt från
+          grunderna i bilköp till avancerad bilvård och underhåll. Vårt uppdrag är
+          att ge dig beprövade råd och praktisk kunskap för din{' '}
+          <strong>bilägare</strong>.
         </p>
         
         <p>
-          Men vad innebär det i praktiken? Sökmotoroptimering kan kännas överväldigande. Det är
-          en värld av ständigt uppdaterade algoritmer, tekniska termer och hundratals så kallade
-          &quot;rankingfaktorer&quot;. Det är lätt att gå vilse. AlltomSEO.se är skapad för att vara din
+          Men vad innebär det i praktiken? Bilvärlden kan kännas överväldigande. Det är
+          en värld av ständigt uppdaterade modeller, tekniska termer och hundratals
+          olika aspekter att tänka på. Det är lätt att gå vilse. Bilråd.se är skapad för att vara din
           kompass i denna värld – en central kunskapskälla som bryter ner komplexa ämnen till
           begripliga och handlingskraftiga steg.
         </p>
@@ -29,26 +29,25 @@ export default function HomeHero() {
         
         <p>
           För att ge dig en tydlig väg framåt har vi strukturerat vår kunskap kring de tre
-          kärnpelarna inom all framgångsrik sökmotoroptimering. Genom att förstå och arbeta med
-          dessa kan du systematiskt förbättra din närvaro på nätet.
+          kärnområdena för alla bilägare. Genom att förstå och arbeta med
+          dessa kan du systematiskt förbättra din bilkunskap.
         </p>
         
         <ul className="list-disc pl-6 space-y-2 my-3">
           <li>
-            <strong>On-Page SEO:</strong> Allt du gör direkt på din egen webbplats. Vi lär dig
-            att skriva och strukturera innehåll som både användare och Google älskar, från
-            sökordsplacering och rubriker till interna länkar och användarupplevelse.
+            <strong>Bilköp:</strong> Allt du behöver veta om att köpa bil. Vi guidar dig
+            genom valet av rätt bil, vad du ska tänka på vid besök hos återförsäljaren,
+            och hur du får bästa möjliga affär.
           </li>
           <li>
-            <strong>Off-Page SEO:</strong> De signaler som bygger din trovärdighet utanför din
-            webbplats. Här handlar det främst om länkar från andra relevanta sidor, men även om
-            andra auktoritetssignaler som visar att du är en aktör att lita på.
+            <strong>Bilvård:</strong> Håll din bil i toppskick. Vi visar dig hur du
+            sköter underhåll, tvättar och vårdar din bil för att den ska hålla längre
+            och behålla sitt värde.
           </li>
           <li>
-            <strong>Teknisk SEO:</strong> Den osynliga ryggraden i din sajt. Vi guidar dig genom
-            hur du säkerställer att din webbplats är snabb, säker, mobilvänlig och enkel för
-            sökmotorer att genomsöka (indexera), så att inget tekniskt står i vägen för din
-            ranking.
+            <strong>Bilråd:</strong> Praktiska tips och råd för vardagen. Från
+            försäkringar till bensinsparande körteknik – vi hjälper dig att bli en
+            smartare bilägare.
           </li>
         </ul>
         
@@ -57,11 +56,10 @@ export default function HomeHero() {
         </h2>
         
         <p>
-          Googles introduktion av AI, som SGE (Search Generative Experience), förändrar
-          spelplanen kontinuerligt. Att förlita sig på förlegad information är inte ett
-          alternativ. Vi bevakar aktivt branschen, analyserar uppdateringar och ser till att
-          våra guider och strategier reflekterar de metoder som fungerar idag och imorgon. Hos
-          oss hittar du inga snabba &quot;hacks&quot;, bara hållbara och beprövade strategier som bygger
+          Bilbranschen förändras kontinuerligt med nya modeller, teknologier och trender.
+          Vi bevakar aktivt branschen, analyserar nyheter och ser till att
+          våra guider och råd reflekterar vad som fungerar idag och imorgon. Hos
+          oss hittar du inga snabba &quot;tricks&quot;, bara hållbara och beprövade råd som bygger
           verkligt värde över tid.
         </p>
         

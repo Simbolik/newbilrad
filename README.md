@@ -1,14 +1,14 @@
-# AlltomSEO.se
+# Bilråd.se
 
-**Professional Swedish SEO Content Platform** - A modern, SEO-optimized website built with Next.js 15 and Payload CMS 3.
+**Professional Swedish Car Content Platform** - A modern website built with Next.js 15 and Payload CMS 3.
 
 ## 🎯 About
 
-AlltomSEO.se is a Swedish content platform dedicated to helping users master search engine optimization (SEO). The site provides comprehensive guides, strategies, and checklists covering all aspects of SEO:
+Bilråd.se is a Swedish content platform dedicated to providing comprehensive information about cars and automotive topics. The site offers guides, tips, and advice covering all aspects of car ownership:
 
-- **On-Page SEO** - Content optimization, keyword placement, internal linking
-- **Off-Page SEO** - Backlinks, authority signals, credibility building  
-- **Technical SEO** - Site speed, mobile-friendliness, crawlability
+- **Bilköp** - Car buying guides, tips for choosing the right car
+- **Bilvård** - Maintenance, care, and upkeep advice
+- **Bilråd** - General automotive advice and practical tips
 
 ## 🚀 Tech Stack
 
@@ -34,16 +34,16 @@ AlltomSEO.se is a Swedish content platform dedicated to helping users master sea
 - ✅ Responsive images
 - ✅ JSON-LD structured data
 - ✅ Mobile-first design with unified box card styling
-- ✅ Root-level post URLs (e.g., `/post-slug` instead of `/posts/post-slug`)
+- ✅ Root-level post URLs (e.g., `/article-slug` instead of `/posts/article-slug`)
 - ✅ Page Heroes collection for manageable hero content
 - ✅ Full Lexical editor features (tables, formatting, media, etc.)
 - ✅ Homepage pagination with modern Tailwind styling
-- ✅ SEO-optimized paginated pages with proper meta tags
+- ✅ Optimized paginated pages with proper meta tags
 
 ## 📁 Project Structure
 
 ```
-/home/dl/projects/alltomseo/
+/home/dl/projects/newbilrad/
 ├── src/
 │   ├── app/
 │   │   ├── (frontend)/          # Public website
@@ -92,7 +92,7 @@ AlltomSEO.se is a Swedish content platform dedicated to helping users master sea
 
 1. **Clone the repository** (if not already done)
    ```bash
-   cd /home/dl/projects/alltomseo
+   cd /home/dl/projects/newbilrad
    ```
 
 2. **Install dependencies**
@@ -104,7 +104,7 @@ AlltomSEO.se is a Swedish content platform dedicated to helping users master sea
    
    Create `.env.local` in the project root:
    ```bash
-   MONGODB_URI=mongodb://localhost:27017/alltomseo
+   MONGODB_URI=mongodb://localhost:27017/bilrad
    PAYLOAD_SECRET=your-secret-key-here
    NEXT_PUBLIC_SERVER_URL=http://localhost:3000
    ```
@@ -142,10 +142,10 @@ AlltomSEO.se is a Swedish content platform dedicated to helping users master sea
 - Hero image
 - Categories (multiple)
 - Published date with Swedish formatting
-- Author attribution ("Redaktionen på AlltomSEO")
+- Author attribution ("Redaktionen på Bilråd.se")
 - SEO fields (title, description, image)
 - Draft/publish workflow
-- Root-level URLs (e.g., `/seo-guide`)
+- Root-level URLs (e.g., `/bilkop-guide`)
 
 #### Pages
 - Title, slug, content (Lexical rich text)
@@ -207,7 +207,7 @@ pnpm lint                # Run ESLint
 ```bash
 # Access database
 mongosh
-use alltomseo
+use bilrad
 
 # View collections
 show collections
@@ -262,7 +262,7 @@ The entire site is optimized for Swedish audience:
    ```bash
    MONGODB_URI=<production-mongodb-uri>
    PAYLOAD_SECRET=<strong-random-secret>
-   NEXT_PUBLIC_SERVER_URL=https://alltomseo.se
+   NEXT_PUBLIC_SERVER_URL=https://bilråd.se
    ```
 
 2. Build the application:
@@ -279,10 +279,10 @@ The entire site is optimized for Swedish audience:
 
 ```bash
 # Create backup
-mongodump --db=alltomseo --out=/path/to/backup/
+mongodump --db=bilrad --out=/path/to/backup/
 
 # Restore backup
-mongorestore --db=alltomseo /path/to/backup/alltomseo/
+mongorestore --db=bilrad /path/to/backup/bilrad/
 ```
 
 ## 🔌 External Post Creation API
@@ -292,16 +292,16 @@ The platform includes an API for creating posts programmatically from external s
 ### Quick Start
 
 ```bash
-curl -X POST https://alltomseo.se/api/posts \
+curl -X POST https://bilråd.se/api/posts \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "title": "Article Title",
-    "slug": "article-slug",
-    "metaDescription": "SEO description",
-    "image": "https://example.com/image.jpg",
-    "imageAlt": "Image description",
-    "body": "Intro text.\n\n## Section Heading\n\nContent here."
+    "title": "Bilköp Guide",
+    "slug": "bilkop-guide",
+    "metaDescription": "Komplett guide för bilköp",
+    "image": "https://example.com/car.jpg",
+    "imageAlt": "Bild på bil",
+    "body": "Introduktion om bilköp.\n\n## Viktiga faktorer\n\nInnehåll här."
   }'
 ```
 
@@ -351,7 +351,7 @@ pnpm build
 
 ## 👥 Team
 
-Built for Swedish SEO professionals and content creators.
+Built for Swedish car enthusiasts and automotive content creators.
 
 ## 📄 License
 

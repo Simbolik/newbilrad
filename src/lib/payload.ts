@@ -250,7 +250,7 @@ function transformPage(doc: any): Page {
 // Get site info (can be extended with a globals collection)
 export async function getSiteInfo() {
   return {
-    title: 'AlltomSEO.se',
+    title: 'Bilråd.se',
     description: 'Your Trusted Guide to Car Ownership in Sweden',
   }
 }

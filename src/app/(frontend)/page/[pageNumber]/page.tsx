@@ -233,8 +233,8 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     ? `Senaste artiklarna - ${domainName}`
     : `Senaste artiklarna - Sida ${pageNumber} - ${domainName}`;
   const metaDescription = pageNumber === '1'
-    ? `Här hittar du de senaste artiklarna om SEO på ${domainName}. Läs våra guider och tips.`
-    : `Här hittar du äldre artiklar om SEO på ${domainName} (Sida ${pageNumber}). Fortsätt läsa vårt arkiv för fler guider och tips.`;
+    ? `Här hittar du de senaste artiklarna om bilar på ${domainName}. Läs våra guider och tips.`
+    : `Här hittar du äldre artiklar om bilar på ${domainName} (Sida ${pageNumber}). Fortsätt läsa vårt arkiv för fler guider och tips.`;
   
   return {
     // 1) Base Meta Tags
@@ -271,7 +271,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
       title: pageTitle,
       description: metaDescription,
       url: `${serverUrl}/page/${pageNumber}`,
-      siteName: 'AlltomSEO.se',
+      siteName: 'Bilråd.se',
       locale: 'sv_SE',
       type: 'website',
       images: [
@@ -279,7 +279,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
           url: `${serverUrl}/og-image.jpg`,
           width: 1200,
           height: 630,
-          alt: 'AlltomSEO.se - SEO Content Platform',
+          alt: 'Bilråd.se - Swedish Car Content Platform',
         },
       ],
     },

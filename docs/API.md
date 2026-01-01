@@ -57,16 +57,16 @@ More detailed content here.
 ## Example Request
 
 ```bash
-curl -X POST https://alltomseo.se/api/posts \
+curl -X POST https://bilråd.se/api/posts \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "title": "Guide till SEO 2024",
-    "slug": "guide-seo-2024",
-    "metaDescription": "Komplett guide till sökmotoroptimering för nybörjare.",
-    "image": "https://example.com/image.jpg",
-    "imageAlt": "SEO illustration med grafer och diagram",
-    "body": "SEO är viktigt för alla webbplatser.\n\n## Vad är SEO?\n\nSEO står för sökmotoroptimering.\n\n### On-page SEO\n\nOptimering av innehåll på sidan."
+    "title": "Guide till bilköp 2024",
+    "slug": "guide-bilkop-2024",
+    "metaDescription": "Komplett guide till bilköp för nybörjare.",
+    "image": "https://example.com/car.jpg",
+    "imageAlt": "Bil vid visningslokal",
+    "body": "Att köpa bil är en stor investering.\n\n## Vad ska man tänka på?\n\nDet finns många faktorer att överväga.\n\n### Budget\n\nBestäm din budget innan du börjar söka."
   }'
 ```
 
@@ -79,8 +79,8 @@ curl -X POST https://alltomseo.se/api/posts \
   "success": true,
   "post": {
     "id": "generated-id",
-    "title": "Guide till SEO 2024",
-    "slug": "guide-seo-2024",
+    "title": "Guide till bilköp 2024",
+    "slug": "guide-bilkop-2024",
     "status": "published"
   }
 }

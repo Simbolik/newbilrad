@@ -226,7 +226,7 @@ export default async function Page({ params: paramsPromise }: Args) {
                   href="/om-oss"
                   className="hover:text-gray-400 transition-colors"
                 >
-                  Redaktionen på AlltomSEO
+                  Redaktionen på Bilråd.se
                 </Link>
               </span>
             </div>
@@ -406,8 +406,8 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   if (category) {
     const serverUrl = getServerSideURL()
     return {
-      title: category.meta?.title || `${category.title} - AlltomSEO.se`,
-      description: category.meta?.description || `Utforska artiklar om ${category.title} på AlltomSEO.se`,
+      title: category.meta?.title || `${category.title} - Bilråd.se`,
+      description: category.meta?.description || `Utforska artiklar om ${category.title} på Bilråd.se`,
       alternates: {
         canonical: `${serverUrl}/${category.slug}`,
       },

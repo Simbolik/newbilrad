@@ -18,7 +18,7 @@ export function formatSwedishDate(dateString: string): string {
 }
 
 /**
- * Format a date with author info (e.g., "11 december, 2025 av Redaktionen på AlltomSEO")
+ * Format a date with author info (e.g., "11 december, 2025 av Redaktionen på Bilråd.se")
  */
 export function formatSwedishDateWithAuthor(dateString: string): string {
   const date = new Date(dateString);

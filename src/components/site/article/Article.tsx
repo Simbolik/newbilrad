@@ -169,7 +169,7 @@ export default function Article({
             <svg className="meta-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
-            <span>av <Link href="/om-oss/" className="text-blue-600 hover:text-blue-800 underline transition-colors" rel="author">Redaktionen på AlltomSEO.se</Link></span>
+            <span>av <Link href="/om-oss/" className="text-blue-600 hover:text-blue-800 underline transition-colors" rel="author">Redaktionen på Bilråd.se</Link></span>
           </li>
         </ul>
       </header>

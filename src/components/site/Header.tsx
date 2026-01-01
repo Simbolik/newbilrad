@@ -5,7 +5,7 @@ import { decodeHtmlEntities } from '@/lib/utils';
 
 export default async function TopBar(){
   const siteInfo = await getSiteInfo();
-  const siteTitle = decodeHtmlEntities(siteInfo?.title || 'AlltomSEO.se');
+  const siteTitle = decodeHtmlEntities(siteInfo?.title || 'Bilråd.se');
   const siteDescription = decodeHtmlEntities(siteInfo?.description || '');
   
   // Build H1 text from site title and description

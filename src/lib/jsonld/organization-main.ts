@@ -3,7 +3,7 @@ import { WithContext, Organization } from 'schema-dts';
 /**
  * Get the base URL for the current environment
  * - Development: http://localhost:3000
- * - Production: https://alltomseo.se
+ * - Production: https://bilråd.se
  */
 function getBaseUrl(): string {
   // Check if we're in browser environment
@@ -17,7 +17,7 @@ function getBaseUrl(): string {
   }
   
   // Production - use the real domain
-  return 'https://alltomseo.se';
+  return 'https://bilråd.se';
 }
 
 export function getOrganizationMainJson(): WithContext<Organization> {
@@ -27,17 +27,17 @@ export function getOrganizationMainJson(): WithContext<Organization> {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${baseUrl}/#redaktionen`,
-    "name": "Redaktionen på AlltomSEO.se",
+    "name": "Redaktionen på Bilråd.se",
     "url": `${baseUrl}/om-oss/`,
-    "description": "Ett team av skribenter, fordonstekniker och bilintresserade som producerar innehåll för AlltomSEO.se. Vi erbjuder guider, råd och tips för bilägare i Sverige – med fokus på användarvärde, teknisk korrekthet och praktisk erfarenhet.",
+    "description": "Ett team av skribenter, fordonstekniker och bilintresserade som producerar innehåll för Bilråd.se. Vi erbjuder guider, råd och tips för bilägare i Sverige – med fokus på användarvärde, teknisk korrekthet och praktisk erfarenhet.",
     "logo": `${baseUrl}/wp-content/uploads/2025/05/cropped-Logo.png`,
     "sameAs": [
-      "https://x.com/alltomseo"
+      "https://x.com/bilradsverige"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Kundservice",
-      "email": "kontakt@alltomseo.se",
+      "email": "kontakt@bilråd.se",
       "url": `${baseUrl}/kontakt/`,
       "availableLanguage": ["sv"]
     },

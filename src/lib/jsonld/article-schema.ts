@@ -3,7 +3,7 @@ import { WithContext, Article } from 'schema-dts';
 /**
  * Get the base URL for the current environment
  * - Development: http://localhost:3000
- * - Production: https://alltomseo.se
+ * - Production: https://bilråd.se
  */
 function getBaseUrl(): string {
   // Check if we're in browser environment
@@ -17,7 +17,7 @@ function getBaseUrl(): string {
   }
   
   // Production - use the real domain
-  return 'https://alltomseo.se';
+  return 'https://bilråd.se';
 }
 
 /**
@@ -133,7 +133,7 @@ export function generateArticleJsonLd({
     
     // Categories and topics
     ...(category && {
-      keywords: [category.name, 'bil', 'alltomseo', 'Sverige']
+      keywords: [category.name, 'bil', 'bilråd', 'Sverige']
     }),
     
     // Featured image with structured ImageObject

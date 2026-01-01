@@ -63,12 +63,12 @@ The pagination UI is built with shadcn/ui components located at `src/components/
 - **Page 1**: Uses homepage title from Page Heroes content
 - **Page 2+**: `Senaste artiklarna - Sida {pageNumber} - {domainName}`
 
-Example: `Senaste artiklarna - Sida 2 - alltomseo.se`
+Example: `Senaste artiklarna - Sida 2 - bilråd.se`
 
 ### Meta Descriptions
 
 - **Page 1**: Uses homepage meta description
-- **Page 2+**: `Här hittar du äldre artiklar om SEO på {domainName} (Sida {pageNumber}). Fortsätt läsa vårt arkiv för fler guider och tips.`
+- **Page 2+**: `Här hittar du äldre artiklar om bilar på {domainName} (Sida {pageNumber}). Fortsätt läsa vårt arkiv för fler guider och tips.`
 
 ### Canonical URLs
 
@@ -166,8 +166,8 @@ To add pagination to other sections (e.g., categories), use the Pagination compo
 <Pagination 
   page={currentPage} 
   totalPages={totalPages}
-  basePath="/category/seo/page"
+  basePath="/category/bilar/page"
 />
 ```
 
-This would generate URLs like `/category/seo/page/2`, `/category/seo/page/3`, etc.
+This would generate URLs like `/category/bilar/page/2`, `/category/bilar/page/3`, etc.
