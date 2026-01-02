@@ -195,6 +195,27 @@ Required variables (see `.env.example`):
 
 **Database Name:** This project uses a MongoDB database named `bilrad`. This database is completely isolated from other projects on the same MongoDB instance.
 
+## Production VPS Server
+
+**Server IP**: `78.109.17.5`  
+**OS**: Ubuntu 24.04.3 LTS (Noble Numbat)  
+**SSH Access**: `ssh root@78.109.17.5`  
+**SSH Key**: `~/.ssh/id_ed25519`
+
+**Quick Commands**:
+```bash
+# Connect to VPS
+ssh root@78.109.17.5
+
+# Check server status
+ssh root@78.109.17.5 "systemctl status"
+
+# View application logs
+ssh root@78.109.17.5 "pm2 logs bilrad"
+```
+
+**Full Deployment Documentation**: See `docs/VPS-DEPLOYMENT.md` for complete server setup, deployment procedures, backup strategies, and troubleshooting guides.
+
 ## Development Guidelines
 
 ### Working with Collections
