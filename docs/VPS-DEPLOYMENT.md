@@ -40,17 +40,40 @@ Before deploying, ensure you have:
 - This documentation should not contain passwords or private keys
 - Consider setting up a non-root user for deployment operations
 
-## Planned Server Setup
+## Installed Software
 
-The following software will be installed on the VPS:
+**Installation Date**: 2026-01-02
 
-### System Components
-- **Node.js**: 20.x LTS
-- **pnpm**: Latest version (package manager)
-- **MongoDB**: 8.x (database)
-- **Nginx**: Latest (web server/reverse proxy)
-- **PM2**: Latest (Node.js process manager)
-- **certbot**: For SSL/TLS certificates (Let's Encrypt)
+### Production Stack
+
+| Software | Installed Version | Status | Project Requirement |
+|----------|------------------|--------|--------------------|
+| **Node.js** | 20.19.6 | ✅ Running | >=20.9.0 |
+| **pnpm** | 10.27.0 | ✅ Ready | ^9 \|\| ^10 |
+| **MongoDB** | 8.0.17 | ✅ Running | 8.x |
+| **Nginx** | 1.24.0 (Ubuntu) | ✅ Installed | Latest |
+| **PM2** | 6.0.14 | ✅ Ready | Latest |
+| **npm** | 10.8.2 | ✅ Ready | (bundled) |
+
+### Build Tools & Dependencies
+- **build-essential**: gcc, g++, make
+- **Python**: 3.x (for node-gyp)
+- **Git**: Latest (for repository cloning)
+- **curl & wget**: For downloads
+
+### Service Status
+```bash
+# Check service status
+ssh root@78.109.17.5 "systemctl status mongod nginx"
+```
+
+### System Notes
+- ⚠️ **Pending Kernel Upgrade**: Kernel 6.8.0-90-generic available (currently running 6.8.0-41-generic)
+- Reboot recommended after initial setup complete
+- All installed versions match project requirements in `package.json`
+
+### To Be Installed
+- **certbot**: For SSL/TLS certificates (Let's Encrypt) - pending domain DNS setup
 
 ### Firewall Configuration
 - Port 22: SSH (secured)
@@ -60,22 +83,27 @@ The following software will be installed on the VPS:
 
 ## Deployment Status
 
-**Current Status**: VPS server provisioned and accessible
+**Current Status**: Base software stack installed and configured
 
 ### Completed Steps
 - ✅ Ubuntu 24.04.3 LTS installed
 - ✅ SSH access configured
 - ✅ Server hostname set to "Bilrad"
+- ✅ System updates and security patches applied (2026-01-02)
+- ✅ Node.js 20.19.6 installed
+- ✅ pnpm 10.27.0 installed
+- ✅ MongoDB 8.0.17 installed and running
+- ✅ Nginx 1.24.0 installed
+- ✅ PM2 6.0.14 installed
+- ✅ Build tools installed (gcc, g++, python3, git)
 
 ### Pending Steps
-- ⏳ System updates and security patches
-- ⏳ Node.js and pnpm installation
-- ⏳ MongoDB installation and configuration
-- ⏳ Nginx installation and configuration
 - ⏳ Application deployment
-- ⏳ SSL certificate setup
-- ⏳ PM2 process manager setup
-- ⏳ Firewall configuration
+- ⏳ SSL certificate setup (Let's Encrypt)
+- ⏳ Nginx reverse proxy configuration
+- ⏳ Firewall configuration (ufw)
+- ⏳ Production environment variables
+- ⏳ PM2 startup configuration
 - ⏳ Automated deployment pipeline
 
 ## Useful Commands
