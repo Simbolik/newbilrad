@@ -283,13 +283,24 @@ The entire site is optimized for Swedish audience:
 
 ## 🚢 Production Deployment
 
+### VPS Server
+This project is deployed on a dedicated VPS server.
+
+📚 **See [docs/VPS-DEPLOYMENT.md](./docs/VPS-DEPLOYMENT.md) for complete deployment guide**
+
+**Quick Connection**:
+```bash
+ssh root@78.109.17.5
+```
+
 ### Before Deploying
 
 1. Update environment variables for production:
    ```bash
-   MONGODB_URI=<production-mongodb-uri>
+   DATABASE_URI=<production-mongodb-uri>
    PAYLOAD_SECRET=<strong-random-secret>
    NEXT_PUBLIC_SERVER_URL=https://bilråd.se
+   NODE_ENV=production
    ```
 
 2. Build the application:
@@ -343,8 +354,10 @@ curl -X POST https://bilråd.se/api/posts \
 
 ## 📚 Documentation
 
+- **[docs/VPS-DEPLOYMENT.md](./docs/VPS-DEPLOYMENT.md)** - VPS Server & Production Deployment Guide
 - **[docs/API.md](./docs/API.md)** - External Post Creation API
 - **[docs/PAGINATION.md](./docs/PAGINATION.md)** - Homepage Pagination System
+- **[WARP.md](./WARP.md)** - AI Assistant Context & Development Guidelines
 - **[PAYLOAD-DOCS.md](./PAYLOAD-DOCS.md)** - Complete Payload CMS documentation
 - **[Payload CMS Docs](https://payloadcms.com/docs)** - Official documentation
 - **[Next.js Docs](https://nextjs.org/docs)** - Next.js App Router guide
