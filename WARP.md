@@ -186,12 +186,14 @@ Located in `src/plugins/index.ts`:
 ## Environment Variables
 
 Required variables (see `.env.example`):
-- `DATABASE_URI` - MongoDB connection string
+- `DATABASE_URI` - MongoDB connection string (e.g., `mongodb://127.0.0.1:27017/bilrad`)
 - `PAYLOAD_SECRET` - JWT encryption key
 - `NEXT_PUBLIC_SERVER_URL` - Public URL (no trailing slash)
 - `CRON_SECRET` - Scheduled jobs authentication
 - `PREVIEW_SECRET` - Draft preview authentication
 - `API_KEY` - External post creation API authentication
+
+**Database Name:** This project uses a MongoDB database named `bilrad`. This database is completely isolated from other projects on the same MongoDB instance.
 
 ## Development Guidelines
 

@@ -104,10 +104,19 @@ Bilråd.se is a Swedish content platform dedicated to providing comprehensive in
    
    Create `.env.local` in the project root:
    ```bash
-   MONGODB_URI=mongodb://localhost:27017/bilrad
+   DATABASE_URI=mongodb://localhost:27017/bilrad
    PAYLOAD_SECRET=your-secret-key-here
    NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+   CRON_SECRET=your-cron-secret-here
+   PREVIEW_SECRET=your-preview-secret-here
+   API_KEY=your-api-key-here
    ```
+   
+   **Important Notes:**
+   - The database name is `bilrad` - this project uses its own isolated MongoDB database
+   - This database is completely separate from any other projects on your system
+   - Replace all placeholder secrets before deploying to production
+   - The `.env.local` file is git-ignored for security
 
 4. **Start MongoDB**
    ```bash
@@ -180,6 +189,24 @@ Bilråd.se is a Swedish content platform dedicated to providing comprehensive in
 - **Components**: Self-contained with Tailwind classes
 - **Shadows**: Custom 3D shadow effect (`shadow-3d`)
 - **Responsive**: Mobile-first approach
+
+## 💾 Database Information
+
+### Database Name
+This project uses a MongoDB database named **`bilrad`**.
+
+### Database Isolation
+- Each project on your system can have its own MongoDB database
+- The `bilrad` database is **completely isolated** from other databases
+- Multiple projects can safely use the same MongoDB server with different database names
+- Example: `alltomseo`, `bilrad`, `other-project` all running on the same MongoDB instance
+
+### First Run
+When you first run `pnpm dev`, Payload CMS will automatically:
+1. Connect to MongoDB using the `DATABASE_URI` from `.env.local`
+2. Create the `bilrad` database if it doesn't exist
+3. Create all required collections (posts, pages, categories, media, users, page-heroes)
+4. Prompt you to create your first admin user at `http://localhost:3000/admin`
 
 ## 🔧 Development
 
