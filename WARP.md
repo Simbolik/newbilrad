@@ -14,9 +14,63 @@ Bilråd.se is a Swedish car content platform built with Next.js 15 App Router an
 - **Rich Text:** Lexical editor with full features
 - **Testing:** Vitest (integration) + Playwright (e2e)
 
+## Development Workflow
+
+**IMPORTANT**: This project follows a strict local development → production deployment workflow.
+
+### Local Development (Your PC)
+**All development work happens locally, NOT on the VPS server.**
+
+**First Time Setup** (run once):
+```bash
+cd /home/dl/projects/newbilrad
+pnpm install              # Install dependencies (only needed once)
+```
+
+**Daily Development** (run every time):
+```bash
+cd /home/dl/projects/newbilrad
+pnpm dev                  # Start dev server on localhost:3000
+# Make changes → See instant hot-reload
+# Press Ctrl+C to stop when done
+```
+
+**When to Run `pnpm install` Again**:
+- After pulling code with new dependencies
+- After adding new npm packages
+- After deleting `node_modules` folder
+
+### Deployment to VPS (Production)
+**Deploy only when features are complete and tested locally.**
+
+```bash
+# 1. Commit and push your changes
+git add .
+git commit -m "Description of changes"
+git push origin main
+
+# 2. Deploy to VPS
+ssh root@78.109.17.5 "cd /var/www/bilrad && git pull && pnpm install && pnpm build && pm2 restart bilrad"
+
+# 3. Verify deployment
+curl -I http://78.109.17.5:3000
+```
+
+### Why This Workflow?
+
+| Aspect | Local Development | VPS Development (❌ Don't Do This) |
+|--------|-------------------|------------------------------------|
+| **Speed** | Instant hot-reload | 60s rebuild each time |
+| **Safety** | Break things safely | Risk breaking live site |
+| **Testing** | Full testing suite | Limited testing |
+| **Rollback** | Git history | Manual fixes |
+| **Workflow** | Modern, standard | Risky, outdated |
+
+**Key Rule**: The VPS at `78.109.17.5:3000` is **production only**. Never edit code directly on the VPS.
+
 ## Common Development Commands
 
-### Development
+### Development (Local)
 ```bash
 pnpm dev                  # Start dev server (port 3000, Turbopack disabled)
 pnpm build                # Build for production + generate sitemap
