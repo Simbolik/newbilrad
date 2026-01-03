@@ -122,8 +122,8 @@ export default async function HomePage({ params: paramsPromise }: Args) {
       const htmlContent = p.content ? lexicalToHtml(p.content) : '';
       const plainTextContent = p.content ? lexicalToPlainText(p.content) : '';
       
-      // Use meta description or generate from content
-      const sourceText = (p.meta?.description as string) || htmlContent || plainTextContent;
+      // Generate excerpt from actual post content, not meta description
+      const sourceText = htmlContent || plainTextContent || '';
       
       // Create smart excerpt with 80 word limit
       const smartExcerpt = createSmartExcerpt(sourceText, 80);
