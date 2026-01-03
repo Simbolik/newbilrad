@@ -5,7 +5,7 @@ This API allows external services to create and publish posts automatically.
 ## Endpoint
 
 ```
-POST /api/posts
+POST /api/create-post
 ```
 
 ## Authentication
@@ -57,7 +57,7 @@ More detailed content here.
 ## Example Request
 
 ```bash
-curl -X POST https://bilråd.se/api/posts \
+curl -X POST https://bilråd.se/api/create-post \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{

@@ -216,12 +216,13 @@ Located in `src/plugins/index.ts`:
 
 ### External Post Creation API
 
-**Endpoint:** `POST /api/posts`
+**Endpoint:** `POST /api/create-post`
 - Bearer token authentication via `API_KEY` env variable
 - Markdown-style headings automatically converted to Lexical format
 - Auto-downloads images from URL and converts to WebP
 - Posts published immediately
 - See `docs/API.md` for full documentation
+- **Note:** Separate from Payload's built-in REST API to avoid conflicts
 
 ### Testing Strategy
 

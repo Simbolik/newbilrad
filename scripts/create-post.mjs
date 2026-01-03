@@ -10,7 +10,7 @@
  * - Regular text becomes paragraphs
  */
 
-const API_URL = 'http://localhost:3000/api/posts'
+const API_URL = 'http://localhost:3000/api/create-post'
 const API_KEY = 'jhkasd87678hjklasdlhkj'
 
 // Dummy data for testing with structured content
