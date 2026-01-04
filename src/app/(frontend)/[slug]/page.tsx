@@ -205,12 +205,13 @@ export default async function Page({ params: paramsPromise }: Args) {
           {post.heroImage && typeof post.heroImage === 'object' && (
             <div className="overflow-hidden rounded-xs mb-6">
               <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
-                <Image
-                  src={post.heroImage.url || ''}
+                <img
+                  src={post.heroImage.sizes?.medium?.url || post.heroImage.url || ''}
                   alt={post.heroImage.alt || post.title}
-                  fill
-                  className="object-cover"
-                  priority
+                  width={900}
+                  height={486}
+                  className="w-full h-full object-cover"
+                  loading="eager"
                   fetchPriority="high"
                 />
               </div>
