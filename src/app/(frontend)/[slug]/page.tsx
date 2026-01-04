@@ -319,7 +319,7 @@ export default async function Page({ params: paramsPromise }: Args) {
                   slug={post.slug}
                   excerpt={smartExcerpt}
                   featured={{
-                    url: post.heroImage && typeof post.heroImage === 'object' ? post.heroImage.url : null,
+                    url: post.heroImage && typeof post.heroImage === 'object' ? (post.heroImage.sizes?.small?.url || post.heroImage.url) : null,
                     alt: post.heroImage && typeof post.heroImage === 'object' ? post.heroImage.alt : null,
                   }}
                   categories={post.categories?.map(cat => 

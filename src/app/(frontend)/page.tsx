@@ -198,14 +198,14 @@ export default async function Home() {
         slug: p.slug,
         excerpt: smartExcerpt,
         featured: { 
-          url: heroImg?.url ?? null,
+          url: heroImg?.sizes?.small?.url ?? heroImg?.url ?? null,
           webpUrl: null, // Payload serves images via URL, format handled by Next.js Image
           retinaUrl: null,
           alt: heroImg?.alt ?? '',
-          heroUrl: heroImg?.url ?? null,
+          heroUrl: heroImg?.sizes?.small?.url ?? heroImg?.url ?? null,
           heroWebpUrl: null,
           heroRetinaUrl: null,
-          heroMobileUrl: heroImg?.url ?? null,
+          heroMobileUrl: heroImg?.sizes?.small?.url ?? heroImg?.url ?? null,
           heroMobileWebpUrl: null,
           width: heroWidth,
           height: heroHeight

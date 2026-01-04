@@ -25,7 +25,7 @@ export default function PostCard({ title, slug, excerpt, featured, categories, d
                 src={featured.url} 
                 alt={featured.alt ?? ''} 
                 width={600} 
-                height={338} 
+                height={324} 
                 className="w-full h-full object-cover"
                 loading={priority ? "eager" : "lazy"}
                 {...(priority && { fetchPriority: "high" as const })}
