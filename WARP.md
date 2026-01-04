@@ -332,10 +332,26 @@ Homepage uses paginated posts (6 per page):
 
 Images are managed through Payload Media collection:
 - Upload via admin panel or API
-- Automatic WebP conversion via Sharp
-- Multiple size variants generated
+- Automatic WebP conversion via Sharp at 85% quality
+- Multiple size variants generated automatically
 - Always provide alt text (required for SEO)
 - Access via `heroImage` relationship field
+
+**Image Sizes Generated:**
+- `thumbnail`: 300px width (admin thumbnails)
+- `small`: 600×324px (PostCard images on listings)
+- `medium`: 900×486px (post page hero images)
+- `large`: 1400px width (high-resolution displays)
+- `xlarge`: 1920px width (only if original is larger)
+- `og`: 1200×630px (Open Graph/social media)
+- `square`: 500×500px (square crop)
+
+**Performance Optimization:**
+- PostCard components use `sizes.small` (600×324px) for optimal LCP
+- Post page hero images use `sizes.medium` (900×486px) for optimal LCP
+- All images have explicit width/height attributes to prevent layout shift
+- Aspect ratio maintained at 16:9 across the site
+- Images use `loading="eager"` and `fetchPriority="high"` for above-the-fold content
 
 ## Troubleshooting
 
