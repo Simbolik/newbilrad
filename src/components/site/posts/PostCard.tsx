@@ -16,7 +16,7 @@ export default function PostCard({ title, slug, excerpt, featured, categories, d
     <article className="rounded-xs border border-border bg-surface p-3 shadow-3d flex flex-col h-full">
       {featured?.url && (
         <Link href={`/${slug}`} className="block overflow-hidden rounded-xs">
-          <div className="relative w-full" style={{ aspectRatio: '400/300' }}>
+          <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
             <picture>
               {featured.webpUrl && (
                 <source type="image/webp" srcSet={featured.webpUrl} />
@@ -24,8 +24,8 @@ export default function PostCard({ title, slug, excerpt, featured, categories, d
               <img 
                 src={featured.url} 
                 alt={featured.alt ?? ''} 
-                width={400} 
-                height={300} 
+                width={600} 
+                height={338} 
                 className="w-full h-full object-cover"
                 loading={priority ? "eager" : "lazy"}
                 {...(priority && { fetchPriority: "high" as const })}
